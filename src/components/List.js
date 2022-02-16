@@ -4,7 +4,7 @@ import { ListGroup, Row, Col, Button, Container } from "react-bootstrap"
 import { MdDeleteOutline, MdModeEdit } from 'react-icons/md' 
 
 
-const ListComponent = () => {
+const ListComponent = ( props ) => {
   const [todos, setTodos] = useState([])
 
   const fetchData = () => {
@@ -22,7 +22,7 @@ const ListComponent = () => {
     fetchData()
   }, [])
 
-  const DeleteTodo = (id) => {
+  const DeleteTodo = ( id ) => {
     fetch(`https://rocky-harbor-47876.herokuapp.com/api/todos/${id}`, {
             method: 'DELETE'
         })
@@ -48,7 +48,12 @@ const ListComponent = () => {
                     {JSON.stringify(todo.important)}
                 </Col>
                 <Col xs={1}>
-                    <Button variant="primary" >
+                    <Button variant="primary" onClick={() => {
+                        props.setModalShow(true)
+                        props.setId(todo.id)
+                        props.setContent(todo.content)
+                        props.setImportance(todo.important)}
+                      }>
                       <MdModeEdit />
                     </Button>
                 </Col>

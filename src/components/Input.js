@@ -2,19 +2,19 @@ import { useState } from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Container, Form, Col, Row, DropdownButton, Dropdown, Button } from "react-bootstrap"
 
-const InputTodo = () => {
+const InputTodo = ( props ) => {
 
     const [todo, setTodo] = useState("")
-    const [importance, setImportance] = useState(false)
+    
 
     const SetImportantTrue = () => {
         console.log('set importance true')
-        setImportance(true)
+        props.setImportance(true)
     }
 
     const SetImportantFalse = () => {
         console.log('set importance false')
-        setImportance(false)
+        props.setImportance(false)
     }
 
     const HandleChange = (event) => {
@@ -24,7 +24,7 @@ const InputTodo = () => {
     const PostTodo = () => {
         let newTodo = {
             content: todo,
-            important: importance
+            important: props.importance
         }
 
         fetch("https://rocky-harbor-47876.herokuapp.com/api/todos", {
