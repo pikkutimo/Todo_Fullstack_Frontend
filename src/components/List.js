@@ -22,6 +22,18 @@ const ListComponent = () => {
     fetchData()
   }, [])
 
+  const DeleteTodo = (id) => {
+    fetch(`https://rocky-harbor-47876.herokuapp.com/api/todos/${id}`, {
+            method: 'DELETE'
+        })
+        .then(id => {
+            console.log('Deleted:', id)
+        })
+        .catch((error) => {
+            console.log(`Error deleting ${id}: `, error)
+        })
+  }
+
   return (
     <Container fluid="xa">
       <ListGroup>
@@ -36,12 +48,12 @@ const ListComponent = () => {
                     {JSON.stringify(todo.important)}
                 </Col>
                 <Col xs={1}>
-                    <Button variant="primary">
+                    <Button variant="primary" >
                       <MdModeEdit />
                     </Button>
                 </Col>
                 <Col xs={1}>
-                    <Button variant="primary">
+                    <Button variant="primary" onClick={() => DeleteTodo(todo.id)}>
                       <MdDeleteOutline />
                     </Button>
                 </Col>
