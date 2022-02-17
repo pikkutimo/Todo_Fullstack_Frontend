@@ -1,27 +1,11 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { ListGroup, Row, Col, Button, Container, Form } from "react-bootstrap"
+import { ListGroup, Row, Col, Button, Form } from "react-bootstrap"
 import { MdDeleteOutline, MdModeEdit } from 'react-icons/md' 
 
 
 const ListComponent = ( props ) => {
-  const [todos, setTodos] = useState([])
-
-  const fetchData = () => {
-    // utilizing heroku api
-    fetch("https://rocky-harbor-47876.herokuapp.com/api/todos")
-      .then(response => {
-        return response.json()
-      })
-      .then(data => {
-        setTodos(data)
-      })
-  }
-
-  useEffect(() => {
-    fetchData()
-  }, [])
-
+  
   const DeleteTodo = ( id ) => {
     fetch(`https://rocky-harbor-47876.herokuapp.com/api/todos/${id}`, {
             method: 'DELETE'
@@ -32,24 +16,60 @@ const ListComponent = ( props ) => {
         .catch((error) => {
             console.log(`Error deleting ${id}: `, error)
         })
+
+        const newTodos = props.todos.filter((todo) => todo.id !== id)
+        props.setTodos(newTodos)
   }
 
-  const toDone = (todo) => {
-    console.log(`${todo.content}, Done!`)
-    props.setDone(true)
+  const toDone = (index, todo) => {
+    
+    console.log(JSON.stringify(todo))
+    const newTodos = [...props.todos]
+    const editedTodo = {
+      content: todo.content,
+      importance: todo.importance,
+      date: todo.date,
+      done: !todo.done
+    }
+
+    fetch(`https://rocky-harbor-47876.herokuapp.com/api/todos/${todo.id}`, {
+          method: 'PUT',
+          headers: {
+              'Content-Type' : 'application/json',
+          },
+          body: JSON.stringify(editedTodo),
+      })
+      .then(response => response.json())
+      .then(editedTodo => {
+          console.log('Edit success:', editedTodo)
+      })
+      .catch((error) => {
+          console.log('Error: ', error)
+      })
+
+    newTodos[index] = editedTodo
+    props.setTodos(newTodos) 
   }
 
   return (
     <>
       <ListGroup>
         <ListGroup.Item>
-          {todos.map((todo, index) => (
-            <ListGroup.Item key={todo.id} data-value={todo}>
-              <Row onClick={() => toDone(todo)}>
-                <Col xs={8}>
-                  <Form.Text bg="success">
-                    {todo.content}
-                  </Form.Text>
+          {props.todos.map((todo, index) => (
+            <ListGroup.Item key={index} data-value={todo}>
+              <Row>
+                <Col xs={1}>
+                  <Form.Check 
+                    type={'checkbox'}
+                    id={todo.id}
+                    checked={todo.done}
+                    onChange={() => toDone(index, todo)}
+                  />
+                </Col>
+                <Col xs={7}>
+                    <Form.Text className={todo.done ? "done" : "notDone"}>
+                      {todo.content}
+                    </Form.Text>
                 </Col>
                 <Col xs={2}>
                     {JSON.stringify(todo.important)}

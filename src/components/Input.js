@@ -1,6 +1,6 @@
 import { useState } from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { Container, Form, Col, Row, DropdownButton, Dropdown, Button } from "react-bootstrap"
+import { Form, Col, Row, DropdownButton, Dropdown, Button } from "react-bootstrap"
 
 const InputTodo = ( props ) => {
 
@@ -30,6 +30,9 @@ const InputTodo = ( props ) => {
         .catch((error) => {
             console.log('Error: ', error)
         })
+
+        const newTodos = [...props.todos, newTodo]
+        props.setTodos(newTodos)
     }
 
     return (

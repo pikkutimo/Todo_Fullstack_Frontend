@@ -12,7 +12,8 @@ const EditModal = (props) => {
     const putTodo = () => {
       let editedTodo = {
         content: editedContent,
-        important: props.importance
+        important: props.importance,
+        done: props.done
       }
 
       fetch(`https://rocky-harbor-47876.herokuapp.com/api/todos/${props.id}`, {
