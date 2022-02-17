@@ -5,17 +5,6 @@ import { Container, Form, Col, Row, DropdownButton, Dropdown, Button } from "rea
 const InputTodo = ( props ) => {
 
     const [todo, setTodo] = useState("")
-    
-
-    const SetImportantTrue = () => {
-        console.log('set importance true')
-        props.setImportance(true)
-    }
-
-    const SetImportantFalse = () => {
-        console.log('set importance false')
-        props.setImportance(false)
-    }
 
     const HandleChange = (event) => {
         setTodo(event.target.value)
@@ -45,22 +34,20 @@ const InputTodo = ( props ) => {
 
     return (
         <>
-            <Container fluid="md">
-                <Row className="justify-content-md-center">
-                    <Col xs="8">
-                        <Form.Control placeholder="Task" onChange={HandleChange} />
-                    </Col>
-                    <Col xs="2">
-                        <DropdownButton id="dropdown-basic-button" title="Importance">
-                            <Dropdown.Item onClick={SetImportantTrue}>True</Dropdown.Item>
-                            <Dropdown.Item onClick={SetImportantFalse}>False</Dropdown.Item>
-                        </DropdownButton>
-                    </Col>
-                    <Col xs="2">
-                        <Button variant="primary" onClick={PostTodo}>Save</Button>
-                    </Col>
-                </Row>
-            </Container>
+            <Row className="justify-content-md-center">
+                <Col xs="8">
+                    <Form.Control placeholder="Task" onChange={HandleChange} />
+                </Col>
+                <Col xs="2">
+                    <DropdownButton id="dropdown-basic-button" title="Importance">
+                        <Dropdown.Item onClick={props.SetImportantTrue}>True</Dropdown.Item>
+                        <Dropdown.Item onClick={props.SetImportantFalse}>False</Dropdown.Item>
+                    </DropdownButton>
+                </Col>
+                <Col xs="2">
+                    <Button variant="primary" onClick={PostTodo}>Save</Button>
+                </Col>
+            </Row>
         </>
     )
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { ListGroup, Row, Col, Button, Container } from "react-bootstrap"
+import { ListGroup, Row, Col, Button, Container, Form } from "react-bootstrap"
 import { MdDeleteOutline, MdModeEdit } from 'react-icons/md' 
 
 
@@ -34,15 +34,22 @@ const ListComponent = ( props ) => {
         })
   }
 
+  const toDone = (todo) => {
+    console.log(`${todo.content}, Done!`)
+    props.setDone(true)
+  }
+
   return (
-    <Container fluid="xa">
+    <>
       <ListGroup>
         <ListGroup.Item>
           {todos.map((todo, index) => (
             <ListGroup.Item key={todo.id} data-value={todo}>
-              <Row className="justify-content-md-center">
+              <Row onClick={() => toDone(todo)}>
                 <Col xs={8}>
+                  <Form.Text bg="success">
                     {todo.content}
+                  </Form.Text>
                 </Col>
                 <Col xs={2}>
                     {JSON.stringify(todo.important)}
@@ -67,7 +74,7 @@ const ListComponent = ( props ) => {
           ))}
         </ListGroup.Item>
       </ListGroup>
-    </Container>
+    </>
   )
 }
 

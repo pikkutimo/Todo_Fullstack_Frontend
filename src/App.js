@@ -1,94 +1,56 @@
 import React, { useState } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap'
 import InputTodo from './components/Input';
 import './components/List'
+import EditModal from './components/EditModal';
 import ListComponent from './components/List';
+import { Container, Row } from 'react-bootstrap';
 
 
 const App = () => {
-  const [modalShow, setModalShow] = useState(false);
-  const [id, setId] = useState();
-  const [content, setContent] = useState();
+  const [modalShow, setModalShow] = useState(false)
+  const [id, setId] = useState()
+  const [content, setContent] = useState()
   const [importance, setImportance] = useState(false)
+  const [done, setDone] = useState(false)
 
-  const EditModal = (props) => {
+  const SetImportantTrue = () => {
+    console.log('set importance true')
+    setImportance(true)
+  }
 
-    const [editedContent, setEditedContent] = useState();
-
-    const handleChange = (event) => {
-      setEditedContent(event.target.value)
-    }
-
-    const putTodo = () => {
-      let editedTodo = {
-        content: editedContent,
-        important: importance
-      }
-
-      fetch(`https://rocky-harbor-47876.herokuapp.com/api/todos/${id}`, {
-          method: 'PUT',
-          headers: {
-              'Content-Type' : 'application/json',
-          },
-          body: JSON.stringify(editedTodo),
-      })
-      .then(response => response.json())
-      .then(editedTodo => {
-          console.log('Edit success:', editedTodo)
-      })
-      .catch((error) => {
-          console.log('Error: ', error)
-      })
-    }
-
-    return (
-      <>
-        <Modal show={props.modalShow} enforceFocus={true} keyboard={true}>
-          <Modal.Header>
-            <Modal.Title>Edit Todo {id}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Control placeholder={content} onChange={handleChange}></Form.Control>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => props.setModalShow(false)}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={() => {
-                if (editedContent) {
-                  putTodo()
-                }
-                props.setModalShow(false)}
-            }>
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </>
-    )
+  const SetImportantFalse = () => {
+    console.log('set importance false')
+    setImportance(false)
   }
   
   return (
-    <div className="App">
+    <Container className="App">
       <InputTodo 
         setImportance={setImportance}
+        SetImportantTrue={SetImportantTrue}
+        SetImportantFalse={SetImportantFalse}
       />
+      <Row>
+        
+      </Row>
       <EditModal
         modalShow={modalShow}
         setModalShow={setModalShow}
         id={id}
         content={content}
         importance={importance}
+        done={done}
+        setDone={setDone}
       />
       <ListComponent 
         setModalShow={setModalShow}
         setId={setId}
         setContent={setContent}
         setImportance={setImportance}
+        done={done}
+        setDone={setDone}
       />
-    </div>
+    </Container>
   );
 }
 
