@@ -1,7 +1,11 @@
 .done {
+    font-size: medium;
+    font-weight: lighter;
     text-decoration: line-through;
 }
 
 .notDone {
+    font-size: medium;
+    font-weight: bolder;
     text-decoration: none;
 }

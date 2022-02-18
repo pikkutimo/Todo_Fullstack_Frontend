@@ -3,8 +3,9 @@ import InputTodo from './components/Input';
 import './components/List'
 import EditModal from './components/EditModal';
 import ListComponent from './components/List';
-import { Container } from 'react-bootstrap'
+import { Container, Stack } from 'react-bootstrap'
 import './styles/ListStyle.css'
+import AppHeader from './components/Header';
 
 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
   const [content, setContent] = useState()
   const [importance, setImportance] = useState(false)
   const [done, setDone] = useState(false)
+  const [logged, setLogged] = useState(true)
   
   const fetchData = () => {
     // utilizing heroku api
@@ -44,32 +46,38 @@ const App = () => {
   return (
     <div className="App">
       <Container>
-        <InputTodo
-          todos={todos}
-          setTodos={setTodos}
-          setImportance={setImportance}
-          SetImportantTrue={SetImportantTrue}
-          SetImportantFalse={SetImportantFalse}
-        />
-        <EditModal
-          modalShow={modalShow}
-          setModalShow={setModalShow}
-          id={id}
-          content={content}
-          importance={importance}
-          done={done}
-          setDone={setDone}
-        />
-        <ListComponent 
-          todos={todos}
-          setTodos={setTodos}
-          setModalShow={setModalShow}
-          setId={setId}
-          setContent={setContent}
-          setImportance={setImportance}
-          done={done}
-          setDone={setDone}
-        />
+        <Stack gap={3}>
+          <AppHeader 
+            logged={logged}
+            setLogged={setLogged}
+          />
+          <InputTodo
+            todos={todos}
+            setTodos={setTodos}
+            setImportance={setImportance}
+            SetImportantTrue={SetImportantTrue}
+            SetImportantFalse={SetImportantFalse}
+          />
+          <EditModal
+            modalShow={modalShow}
+            setModalShow={setModalShow}
+            id={id}
+            content={content}
+            importance={importance}
+            done={done}
+            setDone={setDone}
+          />
+          <ListComponent 
+            todos={todos}
+            setTodos={setTodos}
+            setModalShow={setModalShow}
+            setId={setId}
+            setContent={setContent}
+            setImportance={setImportance}
+            done={done}
+            setDone={setDone}
+          />
+        </Stack>
       </Container>
     </div>
   );

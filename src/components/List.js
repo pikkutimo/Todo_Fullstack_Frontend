@@ -54,7 +54,6 @@ const ListComponent = ( props ) => {
   return (
     <>
       <ListGroup>
-        <ListGroup.Item>
           {props.todos.map((todo, index) => (
             <ListGroup.Item key={index} data-value={todo}>
               <Row>
@@ -92,7 +91,6 @@ const ListComponent = ( props ) => {
             </Row>
             </ListGroup.Item>
           ))}
-        </ListGroup.Item>
       </ListGroup>
     </>
   )
