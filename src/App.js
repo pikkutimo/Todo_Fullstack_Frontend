@@ -6,12 +6,14 @@ import ListComponent from './components/List';
 import { Container, Stack } from 'react-bootstrap'
 import './styles/ListStyle.css'
 import AppHeader from './components/Header';
+import Footer from './components/Footer';
 
 
 const App = () => {
   const [todos, setTodos] = useState([])
   const [modalShow, setModalShow] = useState(false)
   const [id, setId] = useState()
+  const [index, setIndex] = useState()
   const [content, setContent] = useState()
   const [importance, setImportance] = useState(false)
   const [done, setDone] = useState(false)
@@ -54,16 +56,24 @@ const App = () => {
           <InputTodo
             todos={todos}
             setTodos={setTodos}
+            importance={importance}
             setImportance={setImportance}
             SetImportantTrue={SetImportantTrue}
             SetImportantFalse={SetImportantFalse}
           />
           <EditModal
+            todos={todos}
+            setTodos={setTodos}
             modalShow={modalShow}
             setModalShow={setModalShow}
             id={id}
+            index={index}
+            setIndex={setIndex}
             content={content}
             importance={importance}
+            setImportance={setImportance}
+            SetImportantTrue={SetImportantTrue}
+            SetImportantFalse={SetImportantFalse}
             done={done}
             setDone={setDone}
           />
@@ -72,11 +82,13 @@ const App = () => {
             setTodos={setTodos}
             setModalShow={setModalShow}
             setId={setId}
+            setIndex={setIndex}
             setContent={setContent}
             setImportance={setImportance}
             done={done}
             setDone={setDone}
           />
+          <Footer />
         </Stack>
       </Container>
     </div>

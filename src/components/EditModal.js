@@ -30,6 +30,10 @@ const EditModal = (props) => {
       .catch((error) => {
           console.log('Error: ', error)
       })
+
+      let todos = [...props.todos]
+      todos[props.index] = {...todos[props.index], content: editedContent, important: props.importance, done: props.done}
+      props.setTodos(todos)
     }
 
     return (

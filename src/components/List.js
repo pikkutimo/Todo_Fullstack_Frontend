@@ -71,10 +71,11 @@ const ListComponent = ( props ) => {
                     </Form.Text>
                 </Col>
                 <Col xs={2}>
-                    {JSON.stringify(todo.important)}
+                    {todo.important ? 'important' : '-'}
                 </Col>
                 <Col xs={1}>
                     <Button variant="primary" onClick={() => {
+                        props.setIndex(index)
                         props.setModalShow(true)
                         props.setId(todo.id)
                         props.setContent(todo.content)

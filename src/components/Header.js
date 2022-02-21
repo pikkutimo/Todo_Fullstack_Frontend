@@ -37,10 +37,10 @@ const AppHeader = (props) => {
         <>
                 <Navbar bg="primary" variant="dark" className="rounded-bottom pt-3">
                     <Container>
-                        <Navbar.Brand className="fs-2 text-capitalize font-weight-bold px-3">To-do To-do</Navbar.Brand>
+                        <Navbar.Brand className="fs-2 text-capitalize font-weight-bold px-3">To-do App</Navbar.Brand>
                         <Navbar.Toggle />
                         <Navbar.Collapse className="justify-content-end">
-                            <Greeting logged={props.logged} />
+                            {/* <Greeting logged={props.logged} /> */}
                         </Navbar.Collapse>
                     </Container>
                 </Navbar>
