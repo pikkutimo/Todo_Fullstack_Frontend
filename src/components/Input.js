@@ -1,6 +1,6 @@
 import { useState } from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { Form, Col, Row, DropdownButton, Dropdown, Button } from "react-bootstrap"
+import { Form, Col, Row, DropdownButton, Dropdown, Button, OverlayTrigger ,Popover } from "react-bootstrap"
 
 const InputTodo = ( props ) => {
 
@@ -10,29 +10,58 @@ const InputTodo = ( props ) => {
         setTodo(event.target.value)
     }
 
+    const popover = (
+        <Popover id="popover-basic">
+          <Popover.Header as="h3">Login</Popover.Header>
+          <Popover.Body>
+            You'll have to register to post new to-dos!
+          </Popover.Body>
+        </Popover>
+      )
+
     const PostTodo = () => {
         let newTodo = {
             content: todo,
             important: props.importance
         }
 
-        fetch("https://rocky-harbor-47876.herokuapp.com/api/todos", {
+        if(props.user.token) {
+
+            let userToken = `bearer ${props.user.token}`
+            console.log(userToken)
+
+            fetch("http://localhost:3002/api/todos", {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json',
+                'Authorization' : `${userToken}`
             },
             body: JSON.stringify(newTodo),
-        })
-        .then(response => response.json())
-        .then(newTodo => {
-            console.log('Success:', newTodo)
-        })
-        .catch((error) => {
-            console.log('Error: ', error)
-        })
+            })
+            .then(response => response.json())
+            .then(newTodo => {
+                console.log('Success:', newTodo)
+            })
+            .catch((error) => {
+                console.log('Error: ', error)
+            })
+        }
+        
 
         const newTodos = [...props.todos, newTodo]
         props.setTodos(newTodos)
+    }
+
+    const PostButton = (props) => {
+        if (props.logged) {
+            return <Button variant="primary" onClick={PostTodo} className="px-1" >Save</Button>
+        } else {
+            return (
+                <OverlayTrigger trigger="click" placement="left" overlay={popover}>
+                    <Button variant="primary" className="px-1">Save</Button>
+                </OverlayTrigger>
+            )        
+        }
     }
 
     return (
@@ -48,7 +77,7 @@ const InputTodo = ( props ) => {
                     </DropdownButton>
                 </Col>
                 <Col>
-                    <Button variant="primary" onClick={PostTodo} className="px-1">Save</Button>
+                    <PostButton logged={props.logged}/>
                 </Col>
             </Row>
         </>

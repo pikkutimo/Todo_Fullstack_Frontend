@@ -7,21 +7,25 @@ import { Container, Stack } from 'react-bootstrap'
 import './styles/ListStyle.css'
 import AppHeader from './components/Header';
 import Footer from './components/Footer';
+import LoginModal from './components/LoginModal';
+import env from 'react-dotenv'
 
 
 const App = () => {
   const [todos, setTodos] = useState([])
-  const [modalShow, setModalShow] = useState(false)
+  const [editModalShow, setEditModalShow] = useState(false)
+  const [loginModalShow, setLoginModalShow] = useState(false)
   const [id, setId] = useState()
   const [index, setIndex] = useState()
   const [content, setContent] = useState()
   const [importance, setImportance] = useState(false)
   const [done, setDone] = useState(false)
-  const [logged, setLogged] = useState(true)
-  
+  const [logged, setLogged] = useState(false)
+  const [user, setUser] = useState(null)
+
   const fetchData = () => {
-    // utilizing heroku api
-    fetch("https://rocky-harbor-47876.herokuapp.com/api/todos")
+    // utilizing heroku api https://rocky-harbor-47876.herokuapp.com
+    fetch("http://localhost:3002/api/todos")
       .then(response => {
         return response.json()
       })
@@ -52,8 +56,20 @@ const App = () => {
           <AppHeader 
             logged={logged}
             setLogged={setLogged}
+            user={user}
+            setUser={setUser}
+            setLoginModalShow={setLoginModalShow}
+          />
+          <LoginModal 
+            modalShow={loginModalShow}
+            setModalShow={setLoginModalShow}
+            setLoginModalShow={setLoginModalShow}
+            setLogged={setLogged}
+            setUser={setUser}
           />
           <InputTodo
+            user={user}
+            logged={logged}
             todos={todos}
             setTodos={setTodos}
             importance={importance}
@@ -64,8 +80,8 @@ const App = () => {
           <EditModal
             todos={todos}
             setTodos={setTodos}
-            modalShow={modalShow}
-            setModalShow={setModalShow}
+            modalShow={editModalShow}
+            setModalShow={setEditModalShow}
             id={id}
             index={index}
             setIndex={setIndex}
@@ -80,7 +96,7 @@ const App = () => {
           <ListComponent 
             todos={todos}
             setTodos={setTodos}
-            setModalShow={setModalShow}
+            setModalShow={setEditModalShow}
             setId={setId}
             setIndex={setIndex}
             setContent={setContent}
