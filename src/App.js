@@ -3,12 +3,13 @@ import InputTodo from './components/Input';
 import './components/List'
 import EditModal from './components/EditModal';
 import ListComponent from './components/List';
-import { Container, Stack } from 'react-bootstrap'
+import { Container, Stack, Row, Col } from 'react-bootstrap'
 import './styles/ListStyle.css'
 import AppHeader from './components/Header';
 import Footer from './components/Footer';
 import LoginModal from './components/LoginModal';
 import env from 'react-dotenv'
+import jwt_decode from "jwt-decode";
 
 
 const App = () => {
@@ -23,21 +24,58 @@ const App = () => {
   const [logged, setLogged] = useState(false)
   const [user, setUser] = useState(null)
 
-  const fetchData = () => {
-    // utilizing heroku api https://rocky-harbor-47876.herokuapp.com
-    fetch("http://localhost:3002/api/todos")
+  const fetchData = async () => {
+    let userid = "62161811385b6f23a4bcf219"
+
+    fetch(`http://localhost:3002/api/users/${userid}`)
       .then(response => {
         return response.json()
       })
       .then(data => {
         setTodos(data)
       })
+
   }
 
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [user])
 
+  // useEffect(() => {
+  //   const loggedUserJSON = window.localStorage.getItem('loggedTodAppUser')
+  //   if (loggedUserJSON) {
+  //     const user = JSON.parse(loggedUserJSON)
+  //     setUser(user)
+  //   }
+  // }, [])
+
+  const UserList = () => {
+    if (user !== null) {
+      return <ListComponent
+        user={user} 
+        todos={todos}
+        setTodos={setTodos}
+        setModalShow={setEditModalShow}
+        setId={setId}
+        setIndex={setIndex}
+        setContent={setContent}
+        setImportance={setImportance}
+        done={done}
+        setDone={setDone}
+      />
+    } else {
+      return (
+        <>
+          <Row className="justify-content-md-center">
+                <Col xs="10">
+                    lorem ipsum ... not logged in
+                </Col>
+            </Row>
+        </>
+      )
+    }
+
+  }
 
   const SetImportantTrue = () => {
     console.log('set importance true')
@@ -60,11 +98,12 @@ const App = () => {
             setUser={setUser}
             setLoginModalShow={setLoginModalShow}
           />
-          <LoginModal 
+          <LoginModal
             modalShow={loginModalShow}
             setModalShow={setLoginModalShow}
             setLoginModalShow={setLoginModalShow}
             setLogged={setLogged}
+            user={user}
             setUser={setUser}
           />
           <InputTodo
@@ -93,17 +132,7 @@ const App = () => {
             done={done}
             setDone={setDone}
           />
-          <ListComponent 
-            todos={todos}
-            setTodos={setTodos}
-            setModalShow={setEditModalShow}
-            setId={setId}
-            setIndex={setIndex}
-            setContent={setContent}
-            setImportance={setImportance}
-            done={done}
-            setDone={setDone}
-          />
+          <UserList />
           <Footer />
         </Stack>
       </Container>

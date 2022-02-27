@@ -9,39 +9,27 @@ const LoginModal = (props) => {
     const [loginError, setLoginError] = useState()
 
     const login = () => {
-        
         const loginUser = ({
             username,
             password
         })
         
-            fetch('http://localhost:3002/api/login', {
+        fetch('http://localhost:3002/api/login', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
             },
             body: JSON.stringify(loginUser),
-            })
-            .then((response) => {
-                if (!response.ok) {
-                    throw response
-                }
-                return response.json()
-            })
-            //Then with the data from the response in JSON...
-            .then((data) => {
-                console.log('Success: ', data)
-                props.setUser(data)
-                props.setLogged(true)
-                props.setModalShow(false)
-                setFailure(false)
-            })
-            .catch(error => {
-                console.error('Error: ', error)
-                setFailure(true)
-                setLoginError(error.statusText)
-            })
-            
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            props.setUser(data)
+            props.setLogged(true)
+            props.setModalShow(false)
+        })
+        .catch((error) => {
+            console.log('Error: ', error)
+        })
     }
 
     const LoginTitle = () => {
