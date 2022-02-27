@@ -10,12 +10,14 @@ import Footer from './components/Footer';
 import LoginModal from './components/LoginModal';
 import env from 'react-dotenv'
 import jwt_decode from "jwt-decode";
+import RegisterModal from './components/RegisterModal';
 
 
 const App = () => {
   const [todos, setTodos] = useState([])
   const [editModalShow, setEditModalShow] = useState(false)
   const [loginModalShow, setLoginModalShow] = useState(false)
+  const [registerModalShow, setRegisterModalShow] = useState(false)
   const [id, setId] = useState()
   const [index, setIndex] = useState()
   const [content, setContent] = useState()
@@ -97,6 +99,7 @@ const App = () => {
             user={user}
             setUser={setUser}
             setLoginModalShow={setLoginModalShow}
+            setRegisterModalShow={setRegisterModalShow}
           />
           <LoginModal
             modalShow={loginModalShow}
@@ -105,6 +108,11 @@ const App = () => {
             setLogged={setLogged}
             user={user}
             setUser={setUser}
+          />
+          <RegisterModal
+            modalShow={registerModalShow}
+            setModalShow={setRegisterModalShow}
+            setLoginModalShow={setLoginModalShow}
           />
           <InputTodo
             user={user}

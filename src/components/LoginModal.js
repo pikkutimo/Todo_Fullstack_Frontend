@@ -28,6 +28,8 @@ const LoginModal = (props) => {
             props.setModalShow(false)
         })
         .catch((error) => {
+            setFailure(true)
+            setLoginError(error)
             console.log('Error: ', error)
         })
     }
