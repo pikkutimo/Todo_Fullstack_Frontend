@@ -24,13 +24,21 @@ const RegisterModal = (props) => {
             },
             body: JSON.stringify(newUser),
         })
-        .then((response) => response.json())
-        .then((data) => {
+        .then(response => {
+            if (!response.ok) {
+                setRegisterError(response.statusText)
+                setFailure(true)
+                throw Error(`status: ${response.status}`)
+            }
+            return response.json()
+        })
+        .then(data => {
            console.log(data)
            setSuccess(true)
+           props.setLoginModalShow(true)
+           props.setModalShow(false)
         })
         .catch((error) => {
-            setRegisterError(error)
             console.log('Error: ', error)
         })
     }
@@ -59,6 +67,7 @@ const RegisterModal = (props) => {
             return (
                 <Button variant="success" onClick={() => {
                     props.setLoginModalShow(true)
+                    setSuccess(false)
                     props.setModalShow(false)
                 }}>
                 Registration ok!
