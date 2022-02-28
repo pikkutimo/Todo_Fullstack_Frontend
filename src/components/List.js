@@ -7,7 +7,7 @@ import { MdDeleteOutline, MdModeEdit } from 'react-icons/md'
 const ListComponent = ( props ) => {
   
   const DeleteTodo = ( id ) => {
-    fetch(`http://localhost:3002/api/todos/${id}`, {
+    fetch(`${process.env.DEV_URI}/api/todos/${id}`, {
             method: 'DELETE'
         })
         .then(id => {
@@ -32,7 +32,7 @@ const ListComponent = ( props ) => {
       done: !todo.done
     }
 
-    fetch(`http://localhost:3002/api/todos/${todo.id}`, {
+    fetch(`${process.env.DEV_URI}/api/todos/${todo.id}`, {
           method: 'PUT',
           headers: {
               'Content-Type' : 'application/json',

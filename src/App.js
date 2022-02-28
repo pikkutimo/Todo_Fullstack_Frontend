@@ -8,7 +8,6 @@ import './styles/ListStyle.css'
 import AppHeader from './components/Header';
 import Footer from './components/Footer';
 import LoginModal from './components/LoginModal';
-import env from 'react-dotenv'
 import jwt_decode from "jwt-decode";
 import RegisterModal from './components/RegisterModal';
 
@@ -27,15 +26,18 @@ const App = () => {
   const [user, setUser] = useState(null)
 
   const fetchData = async () => {
-    let userid = "62161811385b6f23a4bcf219"
 
-    fetch(`http://localhost:3002/api/users/${userid}`)
+  if (user !== null) {
+    let decoded = jwt_decode(user.token)
+
+    fetch(`${process.env.DEV_URI}/api/users/${decoded.id}`)
       .then(response => {
         return response.json()
       })
       .then(data => {
         setTodos(data)
       })
+  }
 
   }
 

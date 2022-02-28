@@ -17,7 +17,7 @@ const RegisterModal = (props) => {
             password
         })
         
-        fetch('http://localhost:3002/api/users', {
+        fetch(`${process.env.DEV_URI}/api/users`, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',

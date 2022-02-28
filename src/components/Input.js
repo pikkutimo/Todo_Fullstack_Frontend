@@ -30,7 +30,7 @@ const InputTodo = ( props ) => {
             let userToken = `bearer ${props.user.token}`
             console.log(userToken)
 
-            fetch("http://localhost:3002/api/todos", {
+            fetch(`${process.env.DEV_URI}/api/todos`, {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json',
@@ -50,6 +50,7 @@ const InputTodo = ( props ) => {
 
         const newTodos = [...props.todos, newTodo]
         props.setTodos(newTodos)
+        setTodo("")
     }
 
     const PostButton = (props) => {
@@ -68,7 +69,7 @@ const InputTodo = ( props ) => {
         <>
             <Row className="justify-content-md-center">
                 <Col xs="10">
-                    <Form.Control placeholder="Task" onChange={HandleChange} />
+                    <Form.Control value={todo} placeholder="Task" onChange={HandleChange} />
                 </Col>
                 <Col>
                     <DropdownButton id="dropdown-basic-button" title="Importance" className="px-1">

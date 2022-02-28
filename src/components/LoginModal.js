@@ -14,7 +14,7 @@ const LoginModal = (props) => {
             password
         })
         
-        fetch('http://localhost:3002/api/login', {
+        fetch(`${process.env.DEV_URI}/api/login`, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
