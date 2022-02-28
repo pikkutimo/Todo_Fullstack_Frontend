@@ -70,7 +70,7 @@ const App = () => {
         <>
           <Row className="justify-content-md-center">
                 <Col xs="10">
-                    lorem ipsum ... not logged in
+                    not logged in
                 </Col>
             </Row>
         </>
