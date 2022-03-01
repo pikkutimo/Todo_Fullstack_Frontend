@@ -12,3 +12,5 @@ Requires registering and logging in before adding todos.
 2. Node - Express
 3. MondoDB - mongoose
 4. Heroku
+
+Deployed to Heroku through github actions
