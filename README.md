@@ -1,5 +1,5 @@
 # Todo_Fullstack_Frontend
-Fullstack todo-application with db, server and FRONTEND.
+Frontend application for [todo server](https://github.com/pikkutimo/Todo_Fullstack_Server) built with Create-React-App.
 
 [Visit on Heroku](https://pikkutimos-todo.herokuapp.com/)
 
