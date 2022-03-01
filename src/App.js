@@ -25,23 +25,23 @@ const App = () => {
   const [logged, setLogged] = useState(false)
   const [user, setUser] = useState(null)
 
-  const fetchData = async () => {
-
-  if (user !== null) {
-    let decoded = jwt_decode(user.token)
-
-    fetch(`${process.env.DEV_URI}/api/users/${decoded.id}`)
-      .then(response => {
-        return response.json()
-      })
-      .then(data => {
-        setTodos(data)
-      })
-  }
-
-  }
 
   useEffect(() => {
+    const fetchData = async () => {
+
+      if (user !== null) {
+        let decoded = jwt_decode(user.token)
+
+        fetch(`https://rocky-harbor-47876.herokuapp.com/api/users/${decoded.id}`)
+          .then(response => {
+            return response.json()
+          })
+          .then(data => {
+            setTodos(data)
+          })
+      }
+    }
+
     fetchData()
   }, [user])
 

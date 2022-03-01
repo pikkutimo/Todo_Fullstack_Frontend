@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { ListGroup, Row, Col, Button, Form } from "react-bootstrap"
 import { MdDeleteOutline, MdModeEdit } from 'react-icons/md' 
@@ -7,7 +7,7 @@ import { MdDeleteOutline, MdModeEdit } from 'react-icons/md'
 const ListComponent = ( props ) => {
   
   const DeleteTodo = ( id ) => {
-    fetch(`${process.env.DEV_URI}/api/todos/${id}`, {
+    fetch(`https://rocky-harbor-47876.herokuapp.com/api/todos/${id}`, {
             method: 'DELETE'
         })
         .then(id => {
@@ -32,7 +32,7 @@ const ListComponent = ( props ) => {
       done: !todo.done
     }
 
-    fetch(`${process.env.DEV_URI}/api/todos/${todo.id}`, {
+    fetch(`https://rocky-harbor-47876.herokuapp.com/api/todos/${todo.id}`, {
           method: 'PUT',
           headers: {
               'Content-Type' : 'application/json',

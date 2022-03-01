@@ -16,7 +16,7 @@ const EditModal = (props) => {
         done: props.done
       }
 
-      fetch(`${process.env.DEV_URI}/api/todos/${props.id}`, {
+      fetch(`https://rocky-harbor-47876.herokuapp.com/api/todos/${props.id}`, {
           method: 'PUT',
           headers: {
               'Content-Type' : 'application/json',
