@@ -17,7 +17,7 @@ const RegisterModal = (props) => {
             password
         })
         
-        fetch(`https://rocky-harbor-47876.herokuapp.com/api/users`, {
+        fetch(`${process.env.REACT_APP_PROD_URI}/api/users`, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',

@@ -30,7 +30,7 @@ const InputTodo = ( props ) => {
             let userToken = `bearer ${props.user.token}`
             console.log(userToken)
 
-            fetch(`https://rocky-harbor-47876.herokuapp.com/api/todos`, {
+            fetch(`${process.env.REACT_APP_PROD_URI}/api/todos`, {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json',

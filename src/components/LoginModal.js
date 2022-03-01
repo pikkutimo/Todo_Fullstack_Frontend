@@ -14,7 +14,7 @@ const LoginModal = (props) => {
             password
         })
         
-        fetch(`https://rocky-harbor-47876.herokuapp.com/api/login`, {
+        fetch(`${process.env.REACT_APP_PROD_URI}/api/login`, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',

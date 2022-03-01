@@ -32,7 +32,7 @@ const App = () => {
       if (user !== null) {
         let decoded = jwt_decode(user.token)
 
-        fetch(`https://rocky-harbor-47876.herokuapp.com/api/users/${decoded.id}`)
+        fetch(`${process.env.REACT_APP_PROD_URI}/api/users/${decoded.id}`)
           .then(response => {
             return response.json()
           })
