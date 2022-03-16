@@ -39,7 +39,7 @@ const App = () => {
           }
         }
 
-        fetch(`${process.env.REACT_APP_DEV_URI}/api/todos/`, requestOptions)
+        fetch(`${process.env.REACT_APP_PROD_URI}/api/todos/`, requestOptions)
           .then(response => {
             return response.json()
           })

@@ -18,7 +18,7 @@ const ListComponent = ( props ) => {
       }
     }
 
-    fetch(`${process.env.REACT_APP_DEV_URI}/api/todos/${id}`, requestOptions)
+    fetch(`${process.env.REACT_APP_PROD_URI}/api/todos/${id}`, requestOptions)
         .then(id => {
             console.log('Deleted:', id)
         })
