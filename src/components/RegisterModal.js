@@ -5,6 +5,7 @@ const RegisterModal = (props) => {
 
     const [username, setUsername] = useState()
     const [name, setName] = useState()
+    const [email, setEmail] = useState()
     const [password, setPassword] = useState()
     const [failure, setFailure] = useState(false)
     const [success, setSuccess] = useState(false)
@@ -14,16 +15,19 @@ const RegisterModal = (props) => {
         const newUser = ({
             username,
             name,
-            password
+            password,
+            email
         })
-        
-        fetch(`${process.env.REACT_APP_PROD_URI}/api/users`, {
+
+        const requestOptions = {
             method: 'POST',
             headers: {
-            'Content-Type': 'application/json',
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify(newUser),
-        })
+          }
+        
+        fetch(`${process.env.REACT_APP_DEV_URI}/api/signup`, requestOptions)
         .then(response => {
             if (!response.ok) {
                 setRegisterError(response.statusText)
@@ -112,6 +116,17 @@ const RegisterModal = (props) => {
                             <Form.Control placeholder='testi123'
                                 onChange={({ target }) => 
                                     setPassword(target.value)
+                                }></Form.Control>
+                        </Form>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        Email
+                        <Form>
+                            <Form.Control placeholder='teemu.testi@testi.fi'
+                                onChange={({ target }) => 
+                                    setEmail(target.value)
                                 }></Form.Control>
                         </Form>
                     </Col>

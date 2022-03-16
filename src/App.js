@@ -30,9 +30,16 @@ const App = () => {
     const fetchData = async () => {
 
       if (user !== null) {
-        let decoded = jwt_decode(user.token)
+        
+        const requestOptions = {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `bearer ${user.token}`
+          }
+        }
 
-        fetch(`${process.env.REACT_APP_PROD_URI}/api/users/${decoded.id}`)
+        fetch(`${process.env.REACT_APP_DEV_URI}/api/todos/`, requestOptions)
           .then(response => {
             return response.json()
           })

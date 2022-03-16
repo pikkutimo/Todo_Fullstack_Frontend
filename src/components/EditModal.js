@@ -20,6 +20,7 @@ const EditModal = (props) => {
           method: 'PUT',
           headers: {
               'Content-Type' : 'application/json',
+              'Authorization': `bearer ${props.user.token}`
           },
           body: JSON.stringify(editedTodo),
       })

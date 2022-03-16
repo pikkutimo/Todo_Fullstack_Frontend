@@ -5,11 +5,20 @@ import { MdDeleteOutline, MdModeEdit } from 'react-icons/md'
 
 
 const ListComponent = ( props ) => {
+
+  
   
   const DeleteTodo = ( id ) => {
-    fetch(`${process.env.REACT_APP_PROD_URI}/api/todos/${id}`, {
-            method: 'DELETE'
-        })
+
+    const requestOptions = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `bearer ${props.user.token}`
+      }
+    }
+
+    fetch(`${process.env.REACT_APP_DEV_URI}/api/todos/${id}`, requestOptions)
         .then(id => {
             console.log('Deleted:', id)
         })
@@ -32,13 +41,15 @@ const ListComponent = ( props ) => {
       done: !todo.done
     }
 
-    fetch(`${process.env.REACT_APP_PROD_URI}/api/todos/${todo.id}`, {
-          method: 'PUT',
-          headers: {
-              'Content-Type' : 'application/json',
-          },
-          body: JSON.stringify(editedTodo),
-      })
+    const requestOptions = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `bearer ${props.user.token}`
+      }
+    }
+
+    fetch(`${process.env.REACT_APP_PROD_URI}/api/todos/${todo.id}`, requestOptions)
       .then(response => response.json())
       .then(editedTodo => {
           console.log('Edit success:', editedTodo)
