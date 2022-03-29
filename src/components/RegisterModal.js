@@ -40,7 +40,6 @@ const RegisterModal = (props) => {
            console.log(data)
            setSuccess(true)
            setRegisterError()
-           props.setLoginModalShow(true)
            props.setRegisterModalShow(false)
         })
         .catch((error) => {
