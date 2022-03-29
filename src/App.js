@@ -111,8 +111,7 @@ const App = () => {
             setRegisterModalShow={setRegisterModalShow}
           />
           <LoginModal
-            modalShow={loginModalShow}
-            setModalShow={setLoginModalShow}
+            loginModalShow={loginModalShow}
             setLoginModalShow={setLoginModalShow}
             setLogged={setLogged}
             user={user}
@@ -136,8 +135,8 @@ const App = () => {
           <EditModal
             todos={todos}
             setTodos={setTodos}
-            modalShow={editModalShow}
-            setModalShow={setEditModalShow}
+            editmodalShow={editModalShow}
+            setEditModalShow={setEditModalShow}
             id={id}
             index={index}
             setIndex={setIndex}

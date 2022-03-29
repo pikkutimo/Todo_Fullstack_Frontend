@@ -35,7 +35,7 @@ const EditModal = (props) => {
       let todos = [...props.todos]
       todos[props.index] = {...todos[props.index], content: editedContent, important: props.importance, done: props.done}
       props.setTodos(todos)
-      props.setModalShow(false)
+      props.setEditModalShow(false)
     }
 
     return (
@@ -57,7 +57,7 @@ const EditModal = (props) => {
             <Button variant="primary" onClick={putTodo}>
               Save Changes
             </Button>
-            <Button variant="secondary" onClick={() => props.setModalShow(false)}>
+            <Button variant="secondary" onClick={() => props.setEditModalShow(false)}>
               Close
             </Button>
           </Modal.Footer>

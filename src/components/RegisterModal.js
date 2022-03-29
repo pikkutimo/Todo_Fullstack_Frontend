@@ -27,7 +27,7 @@ const RegisterModal = (props) => {
             body: JSON.stringify(newUser),
           }
         
-        fetch(`${process.env.REACT_APP_DEV_URI}/api/signup`, requestOptions)
+        fetch(`${process.env.REACT_APP_PROD_URI}/api/signup`, requestOptions)
         .then(response => {
             if (!response.ok) {
                 setRegisterError(response.statusText)
@@ -39,8 +39,9 @@ const RegisterModal = (props) => {
         .then(data => {
            console.log(data)
            setSuccess(true)
+           setRegisterError()
            props.setLoginModalShow(true)
-           props.setModalShow(false)
+           props.setRegisterModalShow(false)
         })
         .catch((error) => {
             console.log('Error: ', error)
