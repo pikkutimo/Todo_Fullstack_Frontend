@@ -1,7 +1,7 @@
 # Todo_Fullstack_Frontend
 Frontend application for [todo server](https://github.com/pikkutimo/Todo_Fullstack_Server) built with Create-React-App.
 
-[Visit on Heroku](https://pikkutimos-todo.herokuapp.com/)
+[Visit on Heroku - Currently editing broken](https://pikkutimos-todo.herokuapp.com/)
 
 ![](https://github.com/pikkutimo/todo_fullstack_frontend/blob/main/media/todo.gif)
 
