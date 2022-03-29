@@ -25,7 +25,7 @@ const LoginModal = (props) => {
         .then((data) => {
             props.setUser(data)
             props.setLogged(true)
-            props.setLoginModalShow(false)
+            props.setModalShow(false)
         })
         .catch((error) => {
             setFailure(true)
@@ -75,7 +75,7 @@ const LoginModal = (props) => {
             <Button variant="primary" onClick={login}>
               login
             </Button>
-            <Button variant="secondary" onClick={() => props.setLoginModalShow(false)}>
+            <Button variant="secondary" onClick={() => props.setModalShow(false)}>
               cancel
             </Button>
           </Modal.Footer>

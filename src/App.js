@@ -112,7 +112,7 @@ const App = () => {
           />
           <LoginModal
             modalShow={loginModalShow}
-            setLoginModalShow={setLoginModalShow}
+            setLoginShow={setLoginModalShow}
             setLogged={setLogged}
             user={user}
             setUser={setUser}
