@@ -54,10 +54,8 @@ const EditModal = (props) => {
           <Dropdown.Item onClick={props.SetImportantFalse}>False</Dropdown.Item>
           </DropdownButton>
             <Button variant="primary" onClick={() => {
-                if (editedContent) {
-                  console.log('Updating API')
-                  putTodo()
-                }
+                console.log('Updating API')
+                putTodo()
                 props.setModalShow(false)}
             }>
               Save Changes
