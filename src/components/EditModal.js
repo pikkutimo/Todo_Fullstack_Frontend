@@ -35,6 +35,7 @@ const EditModal = (props) => {
       let todos = [...props.todos]
       todos[props.index] = {...todos[props.index], content: editedContent, important: props.importance, done: props.done}
       props.setTodos(todos)
+      props.setModalShow(false)
     }
 
     return (
@@ -53,11 +54,7 @@ const EditModal = (props) => {
           <Dropdown.Item onClick={props.SetImportantTrue}>True</Dropdown.Item>
           <Dropdown.Item onClick={props.SetImportantFalse}>False</Dropdown.Item>
           </DropdownButton>
-            <Button variant="primary" onClick={() => {
-                console.log('Updating API')
-                putTodo()
-                props.setModalShow(false)}
-            }>
+            <Button variant="primary" onClick={putTodo}>
               Save Changes
             </Button>
             <Button variant="secondary" onClick={() => props.setModalShow(false)}>
