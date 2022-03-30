@@ -1,32 +1,32 @@
 import React from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { ListGroup, Row, Col, Button, Form } from "react-bootstrap"
-import { MdDeleteOutline, MdModeEdit } from 'react-icons/md' 
+import { MdDeleteOutline, MdModeEdit } from 'react-icons/md'
 
 
 const ListComponent = ( props ) => {
 
   
   
-  const DeleteTodo = ( id ) => {
+  const DeleteTodo = (todo) => {
 
     const requestOptions = {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `bearer ${props.user.token}`
-      }
+        headers: {
+            'Content-Type' : 'application/json',
+            'Authorization': `bearer ${props.user.token}`
+        },
     }
 
-    fetch(`${process.env.REACT_APP_PROD_URI}/api/todos/${id}`, requestOptions)
+    fetch(`${process.env.REACT_APP_PROD_URI}/api/todos/${todo.id}`, requestOptions)
         .then(id => {
-            console.log('Deleted:', id)
+            console.log(`Deleted: ${props.id}`)
         })
         .catch((error) => {
-            console.log(`Error deleting ${id}: `, error)
+            console.log(`Error deleting ${props.id}: `, error)
         })
 
-        const newTodos = props.todos.filter((todo) => todo.id !== id)
+        const newTodos = props.todos.filter((todo) => todo.id !== props.id)
         props.setTodos(newTodos)
   }
 
@@ -96,7 +96,7 @@ const ListComponent = ( props ) => {
                     </Button>
                 </Col>
                 <Col xs={1}>
-                    <Button variant="primary" onClick={() => DeleteTodo(todo.id)}>
+                    <Button variant="primary" onClick={() => DeleteTodo(todo)}>
                       <MdDeleteOutline />
                     </Button>
                 </Col>

@@ -8,8 +8,8 @@ import './styles/ListStyle.css'
 import AppHeader from './components/Header';
 import Footer from './components/Footer';
 import LoginModal from './components/LoginModal';
-import jwt_decode from "jwt-decode";
 import RegisterModal from './components/RegisterModal';
+
 
 
 const App = () => {
@@ -67,6 +67,7 @@ const App = () => {
         todos={todos}
         setTodos={setTodos}
         setModalShow={setEditModalShow}
+        id={id}
         setId={setId}
         setIndex={setIndex}
         setContent={setContent}
@@ -109,10 +110,12 @@ const App = () => {
             setUser={setUser}
             setLoginModalShow={setLoginModalShow}
             setRegisterModalShow={setRegisterModalShow}
+            setTodos={setTodos}
           />
           <LoginModal
             modalShow={loginModalShow}
-            setLoginShow={setLoginModalShow}
+            setModalShow={setLoginModalShow}
+            setLoginModalShow={setLoginModalShow}
             setLogged={setLogged}
             user={user}
             setUser={setUser}
@@ -120,7 +123,6 @@ const App = () => {
           <RegisterModal
             modalShow={registerModalShow}
             setModalShow={setRegisterModalShow}
-            setLoginModalShow={setLoginModalShow}
           />
           <InputTodo
             user={user}
@@ -136,8 +138,9 @@ const App = () => {
             todos={todos}
             setTodos={setTodos}
             modalShow={editModalShow}
-            setEditModalShow={setEditModalShow}
+            setModalShow={setEditModalShow}
             id={id}
+            user={user}
             index={index}
             setIndex={setIndex}
             content={content}

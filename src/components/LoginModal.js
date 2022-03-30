@@ -13,14 +13,15 @@ const LoginModal = (props) => {
             username,
             password
         })
-        
-        fetch(`${process.env.REACT_APP_PROD_URI}/api/login`, {
+        const requestOptions = {
             method: 'POST',
-            headers: {
-            'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(loginUser),
-        })
+              headers: {
+                  'Content-Type' : 'application/json',
+              },
+              body: JSON.stringify(loginUser),
+          }
+        
+        fetch(`${process.env.REACT_APP_PROD_URI}/api/login/`, requestOptions)
         .then((response) => response.json())
         .then((data) => {
             props.setUser(data)
@@ -44,7 +45,7 @@ const LoginModal = (props) => {
 
     return (
         <>
-            <Modal show={props.loginModalShow} enforceFocus={true} keyboard={true}>
+            <Modal show={props.modalShow} enforceFocus={true} keyboard={true}>
             <Modal.Header>
                <LoginTitle />
             </Modal.Header>

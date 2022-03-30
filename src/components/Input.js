@@ -27,17 +27,16 @@ const InputTodo = ( props ) => {
 
         if(props.user.token) {
 
-            let userToken = `bearer ${props.user.token}`
-            console.log(userToken)
-
-            fetch(`${process.env.REACT_APP_PROD_URI}/api/todos`, {
-            method: 'POST',
-            headers: {
-                'Content-Type' : 'application/json',
-                'Authorization' : `${userToken}`
-            },
-            body: JSON.stringify(newTodo),
-            })
+            const requestOptions = {
+                method: 'POST',
+                  headers: {
+                      'Content-Type' : 'application/json',
+                      'Authorization': `bearer ${props.user.token}`
+                  },
+                  body: JSON.stringify(newTodo),
+              }
+           
+            fetch(`${process.env.REACT_APP_PROD_URI}/api/todos`, requestOptions)
             .then(response => response.json())
             .then(newTodo => {
                 console.log('Success:', newTodo)
