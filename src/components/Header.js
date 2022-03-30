@@ -41,6 +41,7 @@ const AppHeader = (props) => {
     const logOff = () => {
         props.setLogged(false)
         props.setUser(null)
+        props.setTodos([])
     }
 
     return (

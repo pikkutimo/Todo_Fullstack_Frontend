@@ -9,21 +9,23 @@ const EditModal = (props) => {
       setEditedContent(event.target.value)
     }
 
-    const putTodo = () => {
+    const putTodo = (id) => {
       let editedTodo = {
         content: editedContent,
         important: props.importance,
         done: props.done
       }
 
-      fetch(`${process.env.REACT_APP_PROD_URI}/api/todos/${props.id}`, {
-          method: 'PUT',
+      const requestOptions = {
+        method: 'PUT',
           headers: {
               'Content-Type' : 'application/json',
               'Authorization': `bearer ${props.user.token}`
           },
           body: JSON.stringify(editedTodo),
-      })
+      }
+
+      fetch(`${process.env.REACT_APP_PROD_URI}/api/todos/${id}`, requestOptions)
       .then(response => response.json())
       .then(editedTodo => {
           console.log('Edit success:', editedTodo)
@@ -35,7 +37,6 @@ const EditModal = (props) => {
       let todos = [...props.todos]
       todos[props.index] = {...todos[props.index], content: editedContent, important: props.importance, done: props.done}
       props.setTodos(todos)
-      props.setEditModalShow(false)
     }
 
     return (
@@ -54,10 +55,16 @@ const EditModal = (props) => {
           <Dropdown.Item onClick={props.SetImportantTrue}>True</Dropdown.Item>
           <Dropdown.Item onClick={props.SetImportantFalse}>False</Dropdown.Item>
           </DropdownButton>
-            <Button variant="primary" onClick={putTodo}>
+            <Button variant="primary" onClick={() => {
+                if (editedContent) {
+                  console.log('Updating API')
+                  putTodo(props.id)
+                }
+                props.setModalShow(false)}
+            }>
               Save Changes
             </Button>
-            <Button variant="secondary" onClick={() => props.setEditModalShow(false)}>
+            <Button variant="secondary" onClick={() => props.setModalShow(false)}>
               Close
             </Button>
           </Modal.Footer>

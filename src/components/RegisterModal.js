@@ -18,20 +18,21 @@ const RegisterModal = (props) => {
             password,
             email
         })
-
+        
         const requestOptions = {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newUser),
+              headers: {
+                  'Content-Type' : 'application/json',
+              },
+              body: JSON.stringify(newUser),
           }
-        
-        fetch(`${process.env.REACT_APP_PROD_URI}/api/signup`, requestOptions)
+
+        fetch(`https://rocky-harbor-47876.herokuapp.com/api/signup`, requestOptions)
         .then(response => {
             if (!response.ok) {
                 setRegisterError(response.statusText)
                 setFailure(true)
+                console.log('Fuck you!')
                 throw Error(`status: ${response.status}`)
             }
             return response.json()
@@ -39,8 +40,7 @@ const RegisterModal = (props) => {
         .then(data => {
            console.log(data)
            setSuccess(true)
-           setRegisterError()
-           props.setRegisterModalShow(false)
+           props.setModalShow(false)
         })
         .catch((error) => {
             console.log('Error: ', error)
@@ -70,7 +70,6 @@ const RegisterModal = (props) => {
         } else {
             return (
                 <Button variant="success" onClick={() => {
-                    props.setLoginModalShow(true)
                     setSuccess(false)
                     props.setModalShow(false)
                 }}>
