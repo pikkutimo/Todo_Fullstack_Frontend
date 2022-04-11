@@ -30,9 +30,9 @@ const RegisterModal = (props) => {
         fetch(`https://rocky-harbor-47876.herokuapp.com/api/signup`, requestOptions)
         .then(response => {
             if (!response.ok) {
-                setRegisterError(response.statusText)
+                setRegisterError(response.status)
                 setFailure(true)
-                console.log('Fuck you!')
+                console.log(response.status)
                 throw Error(`status: ${response.status}`)
             }
             return response.json()

@@ -8,7 +8,7 @@ const LoginModal = (props) => {
     const [failure, setFailure] = useState(false)
     const [loginError, setLoginError] = useState()
 
-    const login = () => {
+    const login = async () => {
         const loginUser = ({
             username,
             password
@@ -21,8 +21,12 @@ const LoginModal = (props) => {
               body: JSON.stringify(loginUser),
           }
         
-        fetch(`${process.env.REACT_APP_PROD_URI}/api/login/`, requestOptions)
-        .then((response) => response.json())
+        await fetch(`${process.env.REACT_APP_PROD_URI}/api/login/`, requestOptions)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('invalid username/password')
+            } else return response.json()
+        })
         .then((data) => {
             props.setUser(data)
             props.setLogged(true)
@@ -30,7 +34,7 @@ const LoginModal = (props) => {
         })
         .catch((error) => {
             setFailure(true)
-            setLoginError(error)
+            setLoginError(error.toString())
             console.log('Error: ', error)
         })
     }

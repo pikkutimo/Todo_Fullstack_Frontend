@@ -80,7 +80,7 @@ const App = () => {
         <>
           <Row className="justify-content-md-center">
                 <Col xs="10">
-                    not logged in
+                    not logged in ${process.env.REACT_APP_PROD_URI}
                 </Col>
             </Row>
         </>
