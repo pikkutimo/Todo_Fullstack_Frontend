@@ -80,7 +80,11 @@ const LoginModal = (props) => {
             <Button variant="primary" onClick={login}>
               login
             </Button>
-            <Button variant="secondary" onClick={() => props.setModalShow(false)}>
+            <Button variant="secondary" onClick={() => {
+                setFailure(false)
+                setLoginError()
+                props.setModalShow(false)
+            }}>
               cancel
             </Button>
           </Modal.Footer>
