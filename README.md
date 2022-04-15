@@ -1,5 +1,7 @@
 # Todo_Fullstack_Frontend
 
+[![CD](https://github.com/pikkutimo/todo_fullstack_frontend/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/pikkutimo/todo_fullstack_frontend/actions/workflows/main.yml)
+
 Frontend application for [todo server](https://github.com/pikkutimo/Todo_Fullstack_Server) built with Create-React-App.
 
 [Visit on Heroku](https://pikkutimos-todo.herokuapp.com/)
