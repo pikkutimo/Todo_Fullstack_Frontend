@@ -4,7 +4,7 @@ import { Row } from "react-bootstrap"
 const Footer = () => {
     return (
         <>
-            <Row className="justify-content-md-center">Timo Vilen @2022</Row>
+            <Row className="justify-content-sm-center">Timo Vilen @2022</Row>
         </>
     )
 }

@@ -65,8 +65,8 @@ const ListComponent = ( props ) => {
       <ListGroup>
           {props.todos.map((todo, index) => (
             <ListGroup.Item key={index} data-value={todo}>
-              <Row>
-                <Col xs={1}>
+              <Row className="justify-content-sm">
+                <Col sm={1}>
                   <Form.Check 
                     type={'checkbox'}
                     id={todo.id}
@@ -74,15 +74,15 @@ const ListComponent = ( props ) => {
                     onChange={() => toDone(index, todo)}
                   />
                 </Col>
-                <Col xs={7}>
+                <Col sm={7}>
                     <Form.Text className={todo.done ? "done" : "notDone"}>
                       {todo.content}
                     </Form.Text>
                 </Col>
-                <Col xs={2}>
+                <Col sm={2}>
                     {todo.important ? 'important' : '-'}
                 </Col>
-                <Col xs={1}>
+                <Col sm={1}>
                     <Button variant="primary" onClick={() => {
                         props.setIndex(index)
                         props.setModalShow(true)
@@ -93,7 +93,7 @@ const ListComponent = ( props ) => {
                       <MdModeEdit />
                     </Button>
                 </Col>
-                <Col xs={1}>
+                <Col sm={1}>
                     <Button variant="primary" onClick={() => DeleteTodo(todo)}>
                       <MdDeleteOutline />
                     </Button>

@@ -82,17 +82,20 @@ const InputTodo = ( props ) => {
 
     return (
         <>
-            <Row className="justify-content-md-center">
-                <Col xs="10">
+            <Row className="justify-content-sm-center">
+                <Col>
                     <Form.Control value={todo} placeholder="Task" onChange={HandleChange} />
                 </Col>
-                <Col>
+            </Row>
+            <Row className="justify-content-sm-center">
+                <Col ></Col>
+                <Col sm="auto">
                     <DropdownButton id="dropdown-basic-button" title="Importance" className="px-1">
                         <Dropdown.Item onClick={props.SetImportantTrue}>True</Dropdown.Item>
                         <Dropdown.Item onClick={props.SetImportantFalse}>False</Dropdown.Item>
                     </DropdownButton>
                 </Col>
-                <Col>
+                <Col sm="auto">
                     <PostButton logged={props.logged}/>
                 </Col>
             </Row>

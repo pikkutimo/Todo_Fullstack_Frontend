@@ -80,7 +80,7 @@ const App = () => {
         <>
           <Row className="justify-content-md-center">
                 <Col xs="10">
-                    not logged in ${process.env.REACT_APP_PROD_URI}
+                    not logged in
                 </Col>
             </Row>
         </>
@@ -101,7 +101,7 @@ const App = () => {
   
   return (
     <div className="App">
-      <Container>
+      <Container fluid="sm">
         <Stack gap={3}>
           <AppHeader 
             logged={logged}
