@@ -27,10 +27,10 @@ const RegisterModal = (props) => {
               body: JSON.stringify(newUser),
           }
 
-        fetch(`https://rocky-harbor-47876.herokuapp.com/api/signup`, requestOptions)
+        fetch(`${process.env.REACT_APP_PROD_URI}/api/signup`, requestOptions)
         .then(response => {
             if (!response.ok) {
-                setRegisterError(response.status)
+                setRegisterError('existing user')
                 setFailure(true)
                 console.log(response.status)
                 throw Error(`status: ${response.status}`)
@@ -62,7 +62,11 @@ const RegisterModal = (props) => {
                     <Button variant="primary" onClick={() => register()}>
                     register
                     </Button>
-                    <Button variant="secondary" onClick={() => props.setModalShow(false)}>
+                    <Button variant="secondary" onClick={() => {
+                        setRegisterError()
+                        setFailure(false)
+                        props.setModalShow(false)
+                    }}>
                     cancel
                     </Button>
                 </>

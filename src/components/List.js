@@ -6,8 +6,6 @@ import { MdDeleteOutline, MdModeEdit } from 'react-icons/md'
 
 const ListComponent = ( props ) => {
 
-  
-  
   const DeleteTodo = (todo) => {
 
     const requestOptions = {
@@ -20,13 +18,13 @@ const ListComponent = ( props ) => {
 
     fetch(`${process.env.REACT_APP_PROD_URI}/api/todos/${todo.id}`, requestOptions)
         .then(id => {
-            console.log(`Deleted: ${props.id}`)
+            console.log(`Deleted: ${todo.id}`)
         })
         .catch((error) => {
-            console.log(`Error deleting ${props.id}: `, error)
+            console.log(`Error deleting ${todo.id}: `, error)
         })
 
-        const newTodos = props.todos.filter((todo) => todo.id !== props.id)
+        const newTodos = props.todos.filter((item) => todo.id !== item.id)
         props.setTodos(newTodos)
   }
 

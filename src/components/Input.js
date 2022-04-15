@@ -10,7 +10,7 @@ const InputTodo = ( props ) => {
         setTodo(event.target.value)
     }
 
-    const popover = (
+    const popover_logged = (
         <Popover id="popover-basic">
           <Popover.Header as="h3">Login</Popover.Header>
           <Popover.Body>
@@ -18,6 +18,15 @@ const InputTodo = ( props ) => {
           </Popover.Body>
         </Popover>
       )
+    
+    const popover_short = (
+    <Popover id="popover-basic">
+        <Popover.Header as="h3">Too short</Popover.Header>
+        <Popover.Body>
+            You'll have to write longer todos at least 5 characters long!
+        </Popover.Body>
+    </Popover>
+    )
 
     const PostTodo = () => {
         let newTodo = {
@@ -38,29 +47,36 @@ const InputTodo = ( props ) => {
            
             fetch(`${process.env.REACT_APP_PROD_URI}/api/todos`, requestOptions)
             .then(response => response.json())
-            .then(newTodo => {
-                console.log('Success:', newTodo)
-            })
+            .then(function (newTodo) {
+                    console.log(newTodo)
+                    const newTodos = [...props.todos, newTodo]
+                    props.setTodos(newTodos)
+                })
             .catch((error) => {
                 console.log('Error: ', error)
             })
         }
         
 
-        const newTodos = [...props.todos, newTodo]
-        props.setTodos(newTodos)
+        
         setTodo("")
     }
 
     const PostButton = (props) => {
-        if (props.logged) {
-            return <Button variant="primary" onClick={PostTodo} className="px-1" >Save</Button>
-        } else {
+        if (!props.logged) {
             return (
-                <OverlayTrigger trigger="click" placement="left" overlay={popover}>
+                <OverlayTrigger trigger="click" placement="right" overlay={popover_logged}>
                     <Button variant="primary" className="px-1">Save</Button>
                 </OverlayTrigger>
-            )        
+            )    
+        } else if (props.logged && todo.length < 5) {
+            return (
+                <OverlayTrigger trigger="click" placement="right" overlay={popover_short}>
+                    <Button variant="primary" className="px-1">Save</Button>
+                </OverlayTrigger>
+            ) 
+        }else {
+            return <Button variant="primary" onClick={PostTodo} className="px-1" >Save</Button> 
         }
     }
 
