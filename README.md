@@ -1,5 +1,5 @@
 # Todo_Fullstack_Frontend
-[![CI/CD](https://github.com/pikkutimo/todo_fullstack_frontend/actions/workflows/CI/CD.yml/badge.svg?branch=main)](https://github.com/pikkutimo/todo_fullstack_frontend/actions/workflows/CI/CD.yml)
+[![Continuous Deployment](https://github.com/pikkutimo/todo_fullstack_frontend/actions/workflows/Continuous Deployment/badge.svg?branch=main)](https://github.com/pikkutimo/todo_fullstack_frontend/actions/workflows/main.yml)
 
 Frontend application for [todo server](https://github.com/pikkutimo/Todo_Fullstack_Server) built with Create-React-App.
 
