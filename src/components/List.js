@@ -30,12 +30,10 @@ const ListComponent = ( props ) => {
 
   const toDone = (index, todo) => {
     
-    console.log(JSON.stringify(todo))
     const newTodos = [...props.todos]
     const editedTodo = {
       content: todo.content,
       importance: todo.importance,
-      date: todo.date,
       done: !todo.done
     }
 
@@ -44,7 +42,8 @@ const ListComponent = ( props ) => {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `bearer ${props.user.token}`
-      }
+      },
+      body: JSON.stringify(editedTodo),
     }
 
     fetch(`${process.env.REACT_APP_PROD_URI}/api/todos/${todo.id}`, requestOptions)
