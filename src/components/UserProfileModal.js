@@ -1,55 +1,90 @@
 import React, { useState } from 'react';
-import { Modal, Button, Form, Row, Col } from 'react-bootstrap'
+import { Modal, Button, Form, Row, Col, Alert } from 'react-bootstrap'
+import { MdModeEdit } from 'react-icons/md'
+
 
 const UserProfileModal = (props) => {
 
-    const [username, setUsername] = useState("")
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
-
-    // let tempUserState = props.user
-    // const [password, setPassword] = useState()
-    // const [failure, setFailure] = useState(false)
-    // const [success, setSuccess] = useState(false)
-    // const [registerError, setRegisterError] = useState()
+    const [error, setError] = useState()
+    const [alert, setAlert] = useState(false)
+    const [passwordAgain, setPasswordAgain] = useState()
+    const [editUsername, setEditUsername] = useState(true)
+    const [editName, setEditName] = useState(true)
+    const [editEmail, setEditEmail] = useState(true)
+    const [editPassword, setEditPassword] = useState(true)
 
     const editProfile = () => {
+
+        if (!validate()) {
+            setAlert(true)
+            return
+        }
+
+        let username = props.username
+        let name = props.name
+        let email = props.email
+        let password = props.password
+
         let editedUser = ({
             username,
             name,
-            email
+            email,
+            password
         })
 
-        // if (username !== props.username) {
-        //     tempUserState.username = username
-        // }
+        const requestOptions = {
+            method: 'PUT',
+              headers: {
+                  'Content-Type' : 'application/json',
+                  'Authorization': `bearer ${props.user.token}`
+              },
+              body: JSON.stringify(editedUser),
+          }
 
-        // if (name !== props.name) {
-        //     tempUserState.name = name
-        // }
+        fetch(`${process.env.REACT_APP_PROD_URI}/api/users/${props.user.id}`, requestOptions)
+        .then(response => {
+            return response.json()
+        })
+        .then(fetchedUser => {
+            console.log(fetchedUser)
+            props.setUser(fetchedUser)})
+        .catch((error) => {
+          console.log('Error: ', error)
+        })
 
-        // if (email !== props.email) {
-        //     tempUserState.email = email
-        // }
+        setEditEmail(true)
+        setEditName(true)
+        setEditUsername(true)
+        setEditPassword(true)
+        setPasswordAgain(null)
+        props.setModalShow(false)
         
-        console.log(editedUser)
-        // const requestOptions = {
-        //     method: 'POST',
-        //       headers: {
-        //           'Content-Type' : 'application/json',
-        //           'Authorization': `bearer ${props.user.token}`
-        //       },
-        //       body: JSON.stringify(editedUser),
-        //   }
-
-        // fetch(`${process.env.REACT_APP_PROD_URI}/api/users/${props.user.id}`, requestOptions)
-        // .catch((error) => {
-        //   console.log('Error: ', error)
-        // })
-
-        // props.setUser(tempUserState)
     }
 
+    const isEmail = email => {
+        const emailRegex = /\S+@\S+\.\S+/
+        
+        if(emailRegex.test(email)) {
+            return true
+        }
+
+        return false
+    }
+
+    const validate = () => {
+        // Should check if the edit is true
+        if (!editEmail && !isEmail(props.email)) {
+            setError('Email is not valid!')
+            return false
+        }
+
+        if (!editPassword && passwordAgain !== props.password) {
+            setError('Passwords do not match!')
+            return false
+        }
+
+        return true
+    }
     const RegisterTitle = () => {
         return  <Modal.Title>Edit userprofile</Modal.Title>
     }
@@ -57,10 +92,17 @@ const UserProfileModal = (props) => {
     const FooterContent = () => {
         return (
             <>
-                <Button variant="primary" onClick={() => editProfile()}>
-                edit
+                <Button variant="primary" onClick={() => editProfile() }>
+                ok
                 </Button>
                 <Button variant="secondary" onClick={() => {
+                    setEditEmail(true)
+                    setEditName(true)
+                    setEditUsername(true)
+                    setEditPassword(true)
+                    setPasswordAgain(null)
+                    setError(null)
+                    setAlert(false)
                     props.setModalShow(false)
                 }}>
                 cancel
@@ -76,51 +118,116 @@ const UserProfileModal = (props) => {
                <RegisterTitle />
             </Modal.Header>
             <Modal.Body>
+                <Alert variant="danger" show={alert} onClose={() => {
+                    setAlert(false)
+                    setError(null)
+                }} dismissible>
+                    <Alert.Heading>ERROR</Alert.Heading>
+                    <p>{error}</p>
+                </Alert>
+                <Form>
                 <Row>
                     <Col>
-                        Username - {props.user?.username}
-                        <Form>
-                            <Form.Control placeholder='Your username'
-                                onChange={({ target }) => 
-                                    setUsername(target.value)
-                                }></Form.Control>
-                        </Form>
+                        <Form.Group controlId="username">
+                            <Form.Label>Username</Form.Label>
+                            <Row>
+                                <Col sm={10}>
+                                    <Form.Control disabled={editUsername} defaultValue={props.username}
+                                        onChange={({ target }) => {
+                                            props.setUsername(target.value)
+                                        }
+                                        }></Form.Control>
+                                </Col>
+                                <Col sm={2}>
+                                    <Button onClick={() => setEditUsername(!editUsername)}>
+                                        <MdModeEdit />
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </Form.Group>
                     </Col>
                 </Row>
                 <Row>
                     <Col>
-                        Name - {props.user?.name}
-                        <Form>
-                            <Form.Control placeholder='Your name'
-                                onChange={({ target }) => 
-                                    setName(target.value)
-                                }></Form.Control>
-                        </Form>
+                        <Form.Group>
+                            <Form.Label>Name</Form.Label>
+                                <Row>
+                                    <Col sm={10}>
+                                        <Form.Control disabled={editName} defaultValue={props.name}
+                                            onChange={({ target }) => {
+                                                props.setName(target.value)
+                                            }
+                                            }></Form.Control>
+                                    </Col>
+                                    <Col sm={2}>
+                                        <Button onClick={() => setEditName(!editName)}>
+                                            <MdModeEdit />
+                                        </Button>
+                                    </Col>
+                                </Row>
+                        </Form.Group>
                     </Col>
                 </Row>
-                {/* <Row>
-                    <Col>
-                        Password
-                        <Form>
-                            <Form.Control placeholder='testi123'
-                                onChange={({ target }) => 
-                                    setPassword(target.value)
-                                }></Form.Control>
-                        </Form>
-                    </Col>
-                </Row> */}
                 <Row>
                     <Col>
-                        Email - {props.user?.email}
-                        <Form>
-                            <Form.Control placeholder='Your email'
-                                onChange={({ target }) => 
-                                    setEmail(target.value)
-                                }></Form.Control>
-                        </Form>
+                        <Form.Group controlId="email">
+                            <Form.Label>Email</Form.Label>
+                                <Row>
+                                    <Col sm={10}>
+                                        <Form.Control disabled={editEmail} defaultValue={props.email}
+                                            onChange={({ target }) => {
+                                                props.setEmail(target.value)
+                                            }
+                                            }></Form.Control>
+                                    </Col>
+                                    <Col sm={2}>
+                                    <Button onClick={() => setEditEmail(!editEmail)}>
+                                        <MdModeEdit />
+                                    </Button>
+                                    </Col>
+                                </Row>
+                        </Form.Group>
                     </Col>
                 </Row>
-            
+                <Row>
+                    <Col>
+                        <Form.Group controlId="password">
+                            <Form.Label>Password</Form.Label>
+                                <Row>
+                                    <Col sm={10}>
+                                        <Form.Control disabled={editPassword}
+                                        type="password"
+                                        onChange={({ target }) => 
+                                            props.setPassword(target.value)
+                                        }></Form.Control>
+                                    </Col>
+                                    <Col sm={2}>
+                                        <Button onClick={() => setEditPassword(!editPassword)}>
+                                            <MdModeEdit />
+                                        </Button>
+                                    </Col>
+                                </Row>
+                        </Form.Group>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <Form.Group controlId="passWordAgain">
+                            <Form.Label>Password Again</Form.Label>
+                                <Col sm={10}>
+                                <Form.Control disabled={editPassword}
+                                    type="password"
+                                    onChange={({ target }) =>
+                                            setPasswordAgain(target.value)
+                                    }></Form.Control>
+                                </Col>
+                                <Col sm={2}>
+                                </Col>
+                        </Form.Group>
+                            
+                    </Col>
+                </Row>
+                </Form>
           </Modal.Body>
           <Modal.Footer>
             <FooterContent />

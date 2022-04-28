@@ -9,6 +9,7 @@ import AppHeader from './components/Header';
 import Footer from './components/Footer';
 import LoginModal from './components/LoginModal';
 import RegisterModal from './components/RegisterModal';
+import UserProfileModal from './components/UserProfileModal';
 
 
 
@@ -17,6 +18,7 @@ const App = () => {
   const [editModalShow, setEditModalShow] = useState(false)
   const [loginModalShow, setLoginModalShow] = useState(false)
   const [registerModalShow, setRegisterModalShow] = useState(false)
+  const [userProfileModalShow, setUserProfileModalShow] = useState(false)
   const [id, setId] = useState()
   const [index, setIndex] = useState()
   const [content, setContent] = useState()
@@ -24,6 +26,10 @@ const App = () => {
   const [done, setDone] = useState(false)
   const [logged, setLogged] = useState(false)
   const [user, setUser] = useState(null)
+  const [username, setUsername] = useState()
+  const [name, setName] = useState()
+  const [email, setEmail] = useState()
+  const [password, setPassword] = useState()
 
 
   useEffect(() => {
@@ -52,14 +58,6 @@ const App = () => {
     fetchData()
   }, [user])
 
-  // useEffect(() => {
-  //   const loggedUserJSON = window.localStorage.getItem('loggedTodAppUser')
-  //   if (loggedUserJSON) {
-  //     const user = JSON.parse(loggedUserJSON)
-  //     setUser(user)
-  //   }
-  // }, [])
-
   const UserList = () => {
     if (user !== null) {
       return <ListComponent
@@ -80,7 +78,7 @@ const App = () => {
         <>
           <Row className="justify-content-md-center">
                 <Col xs="10">
-                    not logged in ${process.env.REACT_APP_PROD_URI}
+                    not logged in {process.env.REACT_APP_PROD_URI}
                 </Col>
             </Row>
         </>
@@ -106,11 +104,17 @@ const App = () => {
           <AppHeader 
             logged={logged}
             setLogged={setLogged}
-            user={user}
             setUser={setUser}
             setLoginModalShow={setLoginModalShow}
             setRegisterModalShow={setRegisterModalShow}
+            setUserProfileModalShow={setUserProfileModalShow}
             setTodos={setTodos}
+            username={username}
+            setUsername={setUsername}
+            email={email}
+            setEmail={setEmail}
+            name={name}
+            setName={setName}
           />
           <LoginModal
             modalShow={loginModalShow}
@@ -119,10 +123,30 @@ const App = () => {
             setLogged={setLogged}
             user={user}
             setUser={setUser}
+            username={username}
+            setUsername={setUsername}
+            setName={setName}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
           />
           <RegisterModal
             modalShow={registerModalShow}
             setModalShow={setRegisterModalShow}
+          />
+           <UserProfileModal
+            modalShow={userProfileModalShow}
+            setModalShow={setUserProfileModalShow}
+            user={user}
+            setUser={setUser}
+            username={username}
+            setUsername={setUsername}
+            name={name}
+            setName={setName}
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
           />
           <InputTodo
             user={user}
